@@ -1,6 +1,6 @@
 <template>
   <div class="people-div">
-    <button @click="callPeople()">Click Hello</button>
+    <button @click="callPeople()">Click Hello to create</button>
   </div>
 </template>
 <script>
