@@ -15,8 +15,13 @@
           bulk of the card's content.
         </b-card-text>
 
-        <b-button href="#" variant="primary">Go somewhere</b-button>
+        <b-button href="#" variant="primary" @click="openModal()"
+          >Go somewhere</b-button
+        >
       </b-card>
+      <div>
+        <!-- <b-button v-b-modal.modal-center>Launch centered modal</b-button> -->
+      </div>
     </div>
   </div>
 </template>
@@ -25,6 +30,17 @@ export default {
   name: "showpeople",
   props: {
     data: Object
+  },
+  data() {
+    return {
+      userdata: this.data
+    };
+  },
+  methods: {
+    openModal() {
+      this.$emit("openModal", this.userdata);
+      console.log("HELLLOOOOO");
+    }
   }
 };
 </script>

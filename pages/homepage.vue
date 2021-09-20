@@ -6,12 +6,18 @@
         :key="index"
         class="show-people-div-in"
       >
-        <ShowPeople :data="data" />
+        <ShowPeople :data="data" @openModal="openModal" />
       </div>
     </div>
 
     <div class="people-btn-div">
       <People @emittedpeople="emittedpeopledata" />
+    </div>
+    <div class="modal-div">
+      <b-modal v-model="modalShow" centered id="modal-center">
+        <h1>{{ tempUserData.fname }}</h1>
+        <h1>{{ tempUserData.lname }}</h1>
+      </b-modal>
     </div>
   </div>
 </template>
@@ -20,7 +26,9 @@ export default {
   name: "homepage",
   data() {
     return {
-      peopleData: []
+      peopleData: [],
+      tempUserData: {},
+      modalShow: false
     };
   },
   updated() {
@@ -36,6 +44,23 @@ export default {
       console.log("DATA", data);
       this.peopleData = this.peopleData.concat(data);
       console.log("PEOPES", this.peopleData);
+    },
+    showMsgBoxOne() {
+      this.boxOne = "";
+      this.$bvModal
+        .msgBoxOk("Action completed")
+        .then(value => {
+          this.boxOne = value;
+        })
+        .catch(err => {
+          // An error occurred
+        });
+    },
+    openModal(dat) {
+      console.log("Modal Data-------------->", dat);
+      this.tempUserData = dat;
+      this.modalShow = !this.modalShow;
+      console.log(this.tempUserData);
     }
   }
 };
@@ -67,5 +92,12 @@ export default {
 }
 .show-people-div-in {
   flex-basis: 20%;
+}
+.modal-content {
+  height: 50rem;
+}
+
+.fade {
+  backdrop-filter: blur(1rem);
 }
 </style>
