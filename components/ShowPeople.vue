@@ -14,10 +14,11 @@
           Some quick example text to build on the card title and make up the
           bulk of the card's content.
         </b-card-text>
-
-        <b-button href="#" variant="primary" @click="openModal()"
-          >Go somewhere</b-button
-        >
+        <div class="b-button-div">
+          <b-button href="#" variant="primary" @click="openModal($event)"
+            >More Details
+          </b-button>
+        </div>
       </b-card>
       <div>
         <!-- <b-button v-b-modal.modal-center>Launch centered modal</b-button> -->
@@ -33,11 +34,12 @@ export default {
   },
   data() {
     return {
-      userdata: this.data
+      userdata: this.data,
+      modalopenvar: false
     };
   },
   methods: {
-    openModal() {
+    openModal(e) {
       this.$emit("openModal", this.userdata);
       console.log("HELLLOOOOO");
     }
@@ -56,5 +58,9 @@ export default {
 .card-img-top {
   height: 10rem;
   width: 15rem;
+}
+.b-button-div {
+  display: flex;
+  justify-content: center;
 }
 </style>

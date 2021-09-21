@@ -13,10 +13,62 @@
     <div class="people-btn-div">
       <People @emittedpeople="emittedpeopledata" />
     </div>
+
     <div class="modal-div">
       <b-modal v-model="modalShow" centered id="modal-center">
-        <h1>{{ tempUserData.fname }}</h1>
-        <h1>{{ tempUserData.lname }}</h1>
+        <div class="modal-data-div">
+          <img
+            :src="tempUserData.imgurl"
+            alt=""
+            :class="
+              tempUserData.gender === 'male'
+                ? 'modal-img border-male'
+                : 'modal-img border-female'
+            "
+          />
+          <div class="modal-name-text font-primary">
+            {{ tempUserData.fname }} {{ tempUserData.lname }}
+          </div>
+          <div class="modal-mail-div font-secondary">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-envelope-open-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8.941.435a2 2 0 0 0-1.882 0l-6 3.2A2 2 0 0 0 0 5.4v.313l6.709 3.933L8 8.928l1.291.717L16 5.715V5.4a2 2 0 0 0-1.059-1.765l-6-3.2zM16 6.873l-5.693 3.337L16 13.372v-6.5zm-.059 7.611L8 10.072.059 14.484A2 2 0 0 0 2 16h12a2 2 0 0 0 1.941-1.516zM0 13.373l5.693-3.163L0 6.873v6.5z"
+              />
+            </svg>
+            {{ tempUserData.email }}
+          </div>
+          <div class="address-div">
+            <h1 class="font-primary">
+              Address
+            </h1>
+            <span
+              >{{ tempUserData.city }},{{ tempUserData.state }},{{
+                tempUserData.country
+              }}</span
+            >
+          </div>
+          <div class="modal-review-div">
+            <div v-for="revs in tempUserData.rev" :key="revs.revid">
+              <Review :revs="revs.val" />
+            </div>
+          </div>
+          <div class="review-form">
+            <input type="text" class="person-review" />
+            <b-button
+              @click="submitrev(tempUserData.uid)"
+              variant="primary"
+              class="review-btn"
+              >Submit Review
+            </b-button>
+          </div>
+        </div>
       </b-modal>
     </div>
   </div>
@@ -37,7 +89,7 @@ export default {
       behavior: "smooth"
     });
 
-    console.log("UPDATED");
+    console.log("UPDATED and the modalShowvalue is ->", this.modalShow);
   },
   methods: {
     emittedpeopledata(data) {
@@ -45,22 +97,28 @@ export default {
       this.peopleData = this.peopleData.concat(data);
       console.log("PEOPES", this.peopleData);
     },
-    showMsgBoxOne() {
-      this.boxOne = "";
-      this.$bvModal
-        .msgBoxOk("Action completed")
-        .then(value => {
-          this.boxOne = value;
-        })
-        .catch(err => {
-          // An error occurred
-        });
-    },
     openModal(dat) {
       console.log("Modal Data-------------->", dat);
       this.tempUserData = dat;
       this.modalShow = !this.modalShow;
-      console.log(this.tempUserData);
+    },
+    submitrev(id) {
+      const val = document.querySelector(".person-review").value;
+      let s4 = () => {
+        return Math.floor((1 + Math.random()) * 0x10000)
+          .toString(16)
+          .substring(1);
+      };
+      const x = this.peopleData.filter(people => {
+        if (people.uid === id) {
+          people.rev.push({
+            revid: s4(),
+            val: val
+          });
+          return people;
+        }
+      });
+      console.log("XXXXX", this.peopleData);
     }
   }
 };
@@ -96,8 +154,41 @@ export default {
 .modal-content {
   height: 50rem;
 }
-
 .fade {
   backdrop-filter: blur(1rem);
+}
+.modal-data-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.modal-img {
+  border-radius: 50%;
+}
+.border-male {
+  border: 5px solid skyblue;
+}
+.border-female {
+  border: 5px solid rgb(238, 142, 190);
+}
+.address-div {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.modal-review-div {
+  width: 100%;
+}
+.font-primary {
+  font-weight: bold;
+  font-size: 2rem;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+.font-secondary {
+  font-weight: bold;
+  font-size: 1rem;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 </style>
