@@ -13,9 +13,14 @@
     <div class="people-btn-div">
       <People @emittedpeople="emittedpeopledata" />
     </div>
-
-    <div class="modal-div">
-      <b-modal v-model="modalShow" centered id="modal-center">
+    <Modaltest
+      :togglevar="toggler"
+      @modalclosefunc="modalclosefunc"
+      :tempUserData="tempUserData"
+      :peopleData="peopleData"
+    />
+    <!-- <div class="modal-div">
+      <b-modal centered id="modal-center">
         <div class="modal-data-div">
           <img
             :src="tempUserData.imgurl"
@@ -70,7 +75,7 @@
           </div>
         </div>
       </b-modal>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -80,7 +85,8 @@ export default {
     return {
       peopleData: [],
       tempUserData: {},
-      modalShow: false
+      modalShow: false,
+      toggler: false
     };
   },
   updated() {
@@ -92,34 +98,28 @@ export default {
     console.log("UPDATED and the modalShowvalue is ->", this.modalShow);
   },
   methods: {
-    emittedpeopledata(data) {
+    modalclosefunc(val) {
+      console.log("EMITTED CLOSER FUNCTION", val);
+      this.toggler = val;
+    },
+    emittedpeopledata(data, val) {
       console.log("DATA", data);
       this.peopleData = this.peopleData.concat(data);
+      if (val) {
+        this.toggler = val;
+      }
       console.log("PEOPES", this.peopleData);
     },
-    openModal(dat) {
+    openModal(dat, val) {
       console.log("Modal Data-------------->", dat);
       this.tempUserData = dat;
+      if (val) {
+        this.toggler = val;
+      }
+      console.log("TOGGLER VALUE", val);
       this.modalShow = !this.modalShow;
-    },
-    submitrev(id) {
-      const val = document.querySelector(".person-review").value;
-      let s4 = () => {
-        return Math.floor((1 + Math.random()) * 0x10000)
-          .toString(16)
-          .substring(1);
-      };
-      const x = this.peopleData.filter(people => {
-        if (people.uid === id) {
-          people.rev.push({
-            revid: s4(),
-            val: val
-          });
-          return people;
-        }
-      });
-      console.log("XXXXX", this.peopleData);
     }
+    //ENTER SUBMIT REV IF SOMETHING GOES WRONG WITH MODAL
   }
 };
 </script>

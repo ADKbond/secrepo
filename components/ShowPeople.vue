@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     openModal(e) {
-      this.$emit("openModal", this.userdata);
+      this.$emit("openModal", this.userdata, true);
       console.log("HELLLOOOOO");
     }
   }
