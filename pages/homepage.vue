@@ -125,11 +125,16 @@ export default {
     },
     deleteItem(id) {
       console.log("DELLLLLLLL", id);
-      this.peopleData.splice(
-        this.peopleData.findIndex(people => people.uid === id),
-        1
+      var confirmation = confirm(
+        "Are You Sure you want to delete this Person?"
       );
-      console.log("POST DELETION", this.peopleData);
+      if (confirmation == true) {
+        this.peopleData.splice(
+          this.peopleData.findIndex(people => people.uid === id),
+          1
+        );
+        console.log("POST DELETION", this.peopleData);
+      }
     }
     //ENTER SUBMIT REV IF SOMETHING GOES WRONG WITH MODAL
   }
