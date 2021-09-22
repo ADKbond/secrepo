@@ -1,6 +1,8 @@
 <template>
   <div class="people-div">
-    <button @click="callPeople()">Clickedq</button>
+    <b-button variant="outline-success" @click="callPeople()"
+      >Add a New Person</b-button
+    >
   </div>
 </template>
 <script>
@@ -68,9 +70,15 @@ export default {
 .people-div {
   width: 100%;
   height: 100%;
-  background: red;
   display: flex;
+  background: darkslategray;
   justify-content: center;
   align-items: center;
+  box-shadow: 5px 0px 5px black;
+}
+.btn {
+  height: 5rem;
+  font-size: 2rem;
+  border-radius: 1rem;
 }
 </style>

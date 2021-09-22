@@ -1,7 +1,7 @@
 <template>
   <div class="modal-container" @load="changeVal()">
     <div>
-      <b-modal ref="my-modal" hide-footer v-model="togglevar">
+      <b-modal ref="my-modal" hide-footer hide-header v-model="togglevar">
         <div class="modal-data-div">
           <img
             :src="tempUserData.imgurl"
@@ -71,6 +71,7 @@ export default {
       console.log("Modal is about to be shown", bvEvent, modalId);
       this.$emit("modalclosefunc", false);
     });
+    this.togg = false;
   },
   props: {
     togglevar: Boolean,
@@ -79,17 +80,12 @@ export default {
   },
   data() {
     return {
-      togg: {}
+      togg: this.togglevar
     };
   },
-  created() {
-    console.log("TEST MODAL CREATED");
-  },
-  beforeUpdate() {
-    console.log("BEFORE UPDATE");
-  },
   updated() {
-    console.log("TOGGLERVAR is =>");
+    this.togg = this.togglevar;
+    console.log("TOGGLERVAR is =>", this.togg);
     if (this.toggler !== "") {
     }
   },

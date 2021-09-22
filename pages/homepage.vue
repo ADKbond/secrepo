@@ -6,7 +6,11 @@
         :key="index"
         class="show-people-div-in"
       >
-        <ShowPeople :data="data" @openModal="openModal" />
+        <ShowPeople
+          :data="data"
+          @openModal="openModal"
+          @deleteItem="deleteItem"
+        />
       </div>
     </div>
 
@@ -118,6 +122,14 @@ export default {
       }
       console.log("TOGGLER VALUE", val);
       this.modalShow = !this.modalShow;
+    },
+    deleteItem(id) {
+      console.log("DELLLLLLLL", id);
+      this.peopleData.splice(
+        this.peopleData.findIndex(people => people.uid === id),
+        1
+      );
+      console.log("POST DELETION", this.peopleData);
     }
     //ENTER SUBMIT REV IF SOMETHING GOES WRONG WITH MODAL
   }
@@ -136,6 +148,7 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  background: darkgrey;
   /* width: 100vw; */
 }
 .show-people-div {
@@ -144,6 +157,9 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   overflow-y: scroll;
+}
+.show-people-div::-webkit-scrollbar {
+  display: none;
 }
 .people-btn-div {
   flex-basis: 20%;
