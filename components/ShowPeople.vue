@@ -7,7 +7,7 @@
         img-alt="Image"
         img-top
         tag="article"
-        style="max-width: 20rem;"
+        style="max-width: 20rem"
         class="mb-2"
       >
         <b-card-text>
@@ -32,24 +32,23 @@
 export default {
   name: "showpeople",
   props: {
-    data: Object
+    data: Object,
   },
   data() {
     return {
-      userdata: this.data,
-      modalopenvar: false
+      modalopenvar: false,
     };
   },
   methods: {
     openModal(e) {
-      this.$emit("openModal", this.userdata, true);
-      console.log("HELLLOOOOO");
+      this.$emit("openModal", this.data, true);
+      console.log("HELLLOOOOO", this.data);
     },
     deleteFunc(id) {
       this.$emit("deleteItem", id);
       console.log("DEL IDDDD===>", id);
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>

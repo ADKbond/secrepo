@@ -30,27 +30,51 @@
             </svg>
             {{ tempUserData.email }}
           </div>
-          <div class="address-div">
-            <h1 class="font-primary">
-              Address
-            </h1>
-            <span
-              >{{ tempUserData.city }},{{ tempUserData.state }},{{
-                tempUserData.country
-              }}</span
-            >
+          <div class="user-detail-div">
+            <div class="address-div">
+              <h1 class="font-primary">Address:</h1>
+              <span class="font-secondary address-font">
+                {{ tempUserData.city }} , {{ tempUserData.state }},<br />{{
+                  tempUserData.country
+                }}</span
+              >
+            </div>
+            <div class="address-div">
+              <h1 class="font-primary">Zipcode:</h1>
+              <span class="font-secondary address-font">
+                {{ tempUserData.postcode }}</span
+              >
+            </div>
           </div>
+
           <div class="modal-review-div">
-            <div v-for="revs in tempUserData.rev" :key="revs.revid">
-              <Review :revs="revs.val" />
+            <div
+              v-for="revs in tempUserData.rev"
+              :key="revs.revid"
+              class="review-for-div"
+            >
+              <Review
+                :revid="revs.revid"
+                :reviewername="revs.revname"
+                :revval="revs.val"
+              />
             </div>
           </div>
           <div class="review-form">
-            <input type="text" class="person-review" />
+            <input
+              type="text"
+              class="person-name form-item"
+              placeholder="Enter your Name"
+            />
+            <input
+              type="text"
+              class="person-review form-item"
+              placeholder="Enter your Review"
+            />
             <b-button
               @click="submitrev(tempUserData.uid)"
-              variant="primary"
-              class="review-btn"
+              variant="success"
+              class="review-btn form-item"
               >Submit Review
             </b-button>
           </div>
@@ -76,11 +100,11 @@ export default {
   props: {
     togglevar: Boolean,
     tempUserData: Object,
-    peopleData: Array
+    peopleData: Array,
   },
   data() {
     return {
-      togg: this.togglevar
+      togg: this.togglevar,
     };
   },
   updated() {
@@ -101,24 +125,99 @@ export default {
       console.log("TOGGLE TEST MODAL REACHED");
     },
     submitrev(id) {
+      const name = document.querySelector(".person-name").value;
       const val = document.querySelector(".person-review").value;
-      let s4 = () => {
-        return Math.floor((1 + Math.random()) * 0x10000)
-          .toString(16)
-          .substring(1);
-      };
-      const x = this.peopleData.filter(people => {
-        if (people.uid === id) {
-          people.rev.push({
-            revid: s4(),
-            val: val
-          });
-          return people;
-        }
-      });
-      console.log("XXXXX", this.peopleData);
-    }
-  }
+      if (name === "" || val === "") {
+        alert("Please enter a valid Name and Review !");
+      } else {
+        let s4 = () => {
+          return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+        };
+
+        const x = this.peopleData.filter((people) => {
+          if (people.uid === id) {
+            people.rev.push({
+              revid: s4(),
+              revname: name,
+              val: val,
+            });
+            return people;
+          }
+        });
+        console.log("XXXXX", this.peopleData);
+      }
+    },
+  },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.modal-body {
+  background-color: green;
+}
+.modal-data-div {
+  height: 100%;
+}
+.user-detail-div {
+  width: 100%;
+  padding: 1rem;
+  margin-top: 1rem;
+  border: 1px solid lightblue;
+}
+.address-div {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.address-div > h1 {
+  flex-basis: 30%;
+}
+.address-div > span {
+  flex-basis: 70%;
+}
+.address-font {
+  font-size: 1.5rem;
+}
+.review-for-div {
+  display: flex;
+  justify-content: center;
+}
+.modal-review-div {
+  margin-top: 1rem;
+  height: 11rem;
+  overflow-y: scroll;
+}
+.modal-review-div::-webkit-scrollbar {
+  display: none;
+}
+.review-form {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.form-item {
+  margin: 0.5rem;
+}
+.person-name,
+.person-review {
+  border-radius: 1rem;
+  height: 2rem;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  font-family: "Courier New", Courier, monospace;
+  border: none;
+  box-shadow: none;
+  text-align: center;
+}
+/* .person-name:focus-within,
+.person-review:focus {
+  border: none;
+} */
+input:focus {
+  outline: none;
+}
+</style>

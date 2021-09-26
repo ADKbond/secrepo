@@ -90,15 +90,16 @@ export default {
       peopleData: [],
       tempUserData: {},
       modalShow: false,
-      toggler: false
+      toggler: false,
     };
   },
   updated() {
     document.querySelector(".show-people-div").scrollTo({
       top: document.querySelector(".show-people-div").scrollHeight,
-      behavior: "smooth"
+      behavior: "smooth",
     });
-
+    console.log("PEOPLE DATA POST DELETION:", this.peopleData);
+    console.log("TEMP DATA POST DELETION:", this.tempUserData);
     console.log("UPDATED and the modalShowvalue is ->", this.modalShow);
   },
   methods: {
@@ -130,14 +131,15 @@ export default {
       );
       if (confirmation == true) {
         this.peopleData.splice(
-          this.peopleData.findIndex(people => people.uid === id),
+          this.peopleData.findIndex((people) => people.uid === id),
           1
         );
+        return this.peopleData;
         console.log("POST DELETION", this.peopleData);
       }
-    }
+    },
     //ENTER SUBMIT REV IF SOMETHING GOES WRONG WITH MODAL
-  }
+  },
 };
 </script>
 <style>
@@ -174,6 +176,8 @@ export default {
 }
 .modal-content {
   height: 50rem;
+  background-color: rgb(44, 38, 38);
+  color: white;
 }
 .fade {
   backdrop-filter: blur(1rem);
