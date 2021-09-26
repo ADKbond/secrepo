@@ -32,7 +32,7 @@
           </div>
           <div class="user-detail-div">
             <div class="address-div">
-              <h1 class="font-primary">Address:</h1>
+              <h1 class="font-primary detail-title-font">Address:</h1>
               <span class="font-secondary address-font">
                 {{ tempUserData.city }} , {{ tempUserData.state }},<br />{{
                   tempUserData.country
@@ -40,7 +40,7 @@
               >
             </div>
             <div class="address-div">
-              <h1 class="font-primary">Zipcode:</h1>
+              <h1 class="font-primary detail-title-font">Zipcode:</h1>
               <span class="font-secondary address-font">
                 {{ tempUserData.postcode }}</span
               >
@@ -185,7 +185,7 @@ export default {
 }
 .modal-review-div {
   margin-top: 1rem;
-  height: 11rem;
+  height: 13rem;
   overflow-y: scroll;
 }
 .modal-review-div::-webkit-scrollbar {
@@ -219,5 +219,8 @@ export default {
 } */
 input:focus {
   outline: none;
+}
+.detail-title-font {
+  color: moccasin;
 }
 </style>
